@@ -18,12 +18,15 @@ class PrefsController: NSWindowController {
     }
     
     override func windowDidLoad(){
+        os_log( "Prefs loaded")
+        super.windowDidLoad()
         let defaults = UserDefaults()
-        var path = defaults.value(forKeyPath: PrefsController.pathKey) as? String
+        let path = defaults.value(forKeyPath: PrefsController.pathKey) as? String
         if path == nil {
-            path = ""
+            pathField.stringValue = "<Not set>"
+        } else {
+            pathField.stringValue = path!
         }
-        pathField.stringValue = path!
     }
     
     @IBAction func startPathPanel(_ sender: AnyObject) {
@@ -42,6 +45,9 @@ class PrefsController: NSWindowController {
                 self.pathField.stringValue = path
                 let defaults = UserDefaults()
                 defaults.setValue(path, forKeyPath: PrefsController.pathKey)
+                
+                let appDelegate = NSApplication.shared.delegate as! AppDelegate
+                appDelegate.updateTopicsList()
             }
           })
     }

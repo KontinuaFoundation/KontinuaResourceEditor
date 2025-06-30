@@ -15,13 +15,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     public var topicList:[String]
     // The details about each topic
     public var topicDict:[String:Topic]
+    
+    var prefsController:PrefsController = PrefsController()
+    
 
     override init() {
         self.topicDict = [:]
         self.topicList = []
     }
-  
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    
+    func updateTopicsList() {
         let defaults = UserDefaults()
         // The user can have the latest topic_index
         var path = defaults.value(forKeyPath: PrefsController.pathKey) as? String
@@ -30,15 +33,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if path == nil {
             path = Bundle.main.path(forResource:"topic_index", ofType: "json")
         }
-
+           
         do {
-            let jsonData = try Data(contentsOf: URL(fileURLWithPath: path!))
+            let url = URL(fileURLWithPath: path!)
+            guard url.startAccessingSecurityScopedResource() else {
+                os_log("No permission to read: \(url)")
+                return
+            }
+            let jsonData = try Data(contentsOf:url)
+            url.stopAccessingSecurityScopedResource()
             let decoder = JSONDecoder()
             topicDict = try decoder.decode([String:Topic].self, from: jsonData)
             topicList = Array(topicDict.keys)
+            os_log("Topics read: \(self.topicList.count)")
         } catch {
             os_log("Parsing error: \(error)")
         }
+    }
+  
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        self.updateTopicsList()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -53,14 +67,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return false
     }
     func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool {
-        os_log("Checking for untitled")
         return false
     }
     
     // Bring the Preferences Panel on screen
     @IBAction func showPrefs(_ sender:Any) {
-        let prefs = PrefsController()
-        prefs.showWindow(nil)
+        prefsController.showWindow(nil)
     }
 }
 
