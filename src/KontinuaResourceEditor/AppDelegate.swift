@@ -44,7 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             url.stopAccessingSecurityScopedResource()
             let decoder = JSONDecoder()
             topicDict = try decoder.decode([String:Topic].self, from: jsonData)
-            topicList = Array(topicDict.keys)
+            topicList = Array(topicDict.keys.sorted())
             os_log("Topics read: \(self.topicList.count)")
         } catch {
             os_log("Parsing error: \(error)")
