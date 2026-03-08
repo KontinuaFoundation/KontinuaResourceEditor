@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,6 +23,7 @@
                 <outlet property="removeRequiresButton" destination="5br-zS-qPL" id="tuO-kV-5JQ"/>
                 <outlet property="removeVideoButton" destination="7Wn-CE-mFQ" id="hkI-GZ-BLm"/>
                 <outlet property="requiresTableView" destination="gO4-oU-jqD" id="mNh-cL-Cx2"/>
+                <outlet property="searchField" destination="Mab-ng-K0i" id="bRm-JW-xIg"/>
                 <outlet property="topicTableView" destination="bI0-IF-WRt" id="UL7-zt-Ftm"/>
                 <outlet property="videoTableView" destination="p5X-va-C8G" id="e50-pB-eFJ"/>
                 <outlet property="window" destination="xOd-HO-29H" id="JIz-fz-R2o"/>
@@ -34,7 +35,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="133" y="235" width="804" height="558"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2056" height="1285"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1409"/>
             <value key="minSize" type="size" width="600" height="500"/>
             <view key="contentView" id="gIp-Ho-8D9">
                 <rect key="frame" x="0.0" y="0.0" width="804" height="558"/>
@@ -118,7 +119,7 @@
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="M1j-H4-KWb">
-                                    <rect key="frame" x="1" y="118" width="395" height="16"/>
+                                    <rect key="frame" x="1" y="117" width="395" height="17"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Ykc-Xg-ARi">
@@ -165,7 +166,7 @@
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="dn7-Ce-lSQ">
-                                    <rect key="frame" x="1" y="118" width="393" height="16"/>
+                                    <rect key="frame" x="1" y="117" width="393" height="17"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="R6M-Lg-zar">
@@ -269,7 +270,7 @@
                                             </subviews>
                                         </clipView>
                                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="yLY-bd-voO">
-                                            <rect key="frame" x="1" y="140" width="247" height="16"/>
+                                            <rect key="frame" x="1" y="139" width="247" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="WSk-jZ-Xmf">
@@ -359,7 +360,7 @@
                                             </subviews>
                                         </clipView>
                                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Bqf-Rg-fXD">
-                                            <rect key="frame" x="1" y="141" width="247" height="16"/>
+                                            <rect key="frame" x="1" y="140" width="247" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="0Qo-Eh-NUE">
@@ -480,7 +481,7 @@
                             <constraint firstAttribute="width" constant="550" id="7lG-Pj-oPu"/>
                         </constraints>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="gU3-oN-0Fr">
-                            <rect key="frame" x="1" y="267" width="225" height="16"/>
+                            <rect key="frame" x="1" y="266" width="225" height="17"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="0bD-c9-OEl">
@@ -526,20 +527,20 @@
         <window title="Picker" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hasShadow="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Cxq-Nr-N3k">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="283" y="305" width="750" height="413"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2056" height="1285"/>
+            <rect key="contentRect" x="283" y="305" width="750" height="487"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1409"/>
             <view key="contentView" id="SY3-hF-Wdp">
-                <rect key="frame" x="0.0" y="0.0" width="750" height="413"/>
+                <rect key="frame" x="0.0" y="0.0" width="750" height="487"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MYE-hY-hf7">
-                        <rect key="frame" x="5" y="30" width="740" height="378"/>
+                        <rect key="frame" x="5" y="30" width="740" height="403"/>
                         <clipView key="contentView" id="bma-5S-tvh">
-                            <rect key="frame" x="1" y="1" width="738" height="376"/>
+                            <rect key="frame" x="1" y="1" width="738" height="401"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" headerView="PM7-kW-yyx" id="bI0-IF-WRt">
-                                    <rect key="frame" x="0.0" y="0.0" width="738" height="348"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="738" height="373"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="17" height="0.0"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -579,7 +580,7 @@
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="nMA-ud-dea">
-                            <rect key="frame" x="1" y="361" width="738" height="16"/>
+                            <rect key="frame" x="1" y="360" width="738" height="17"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="7Y8-uz-EGz">
@@ -592,7 +593,7 @@
                         </tableHeaderView>
                     </scrollView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="x0r-Bt-Rud">
-                        <rect key="frame" x="-2" y="-2" width="76" height="32"/>
+                        <rect key="frame" x="5" y="5" width="62" height="20"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Iac-qA-88B">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -609,7 +610,7 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nm3-l6-xRp">
-                        <rect key="frame" x="677" y="-2" width="75" height="32"/>
+                        <rect key="frame" x="684" y="5" width="61" height="20"/>
                         <buttonCell key="cell" type="push" title="Create" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sEE-kQ-vGk">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -625,19 +626,36 @@ DQ
                             <action selector="acceptPicker:" target="-2" id="eWg-8O-xJi"/>
                         </connections>
                     </button>
+                    <searchField wantsLayer="YES" focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mab-ng-K0i">
+                        <rect key="frame" x="5" y="449" width="735" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="BvO-cP-elK"/>
+                        </constraints>
+                        <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="Y8I-W5-Rf8">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </searchFieldCell>
+                        <connections>
+                            <outlet property="delegate" destination="-2" id="da4-j7-6s0"/>
+                        </connections>
+                    </searchField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="MYE-hY-hf7" firstAttribute="leading" secondItem="SY3-hF-Wdp" secondAttribute="leading" constant="5" id="5u4-db-SpX"/>
-                    <constraint firstItem="MYE-hY-hf7" firstAttribute="top" secondItem="SY3-hF-Wdp" secondAttribute="top" constant="5" id="9My-GJ-33j"/>
                     <constraint firstAttribute="trailing" secondItem="MYE-hY-hf7" secondAttribute="trailing" constant="5" id="Atd-4B-E9e"/>
                     <constraint firstAttribute="bottom" secondItem="x0r-Bt-Rud" secondAttribute="bottom" constant="5" id="CtQ-kM-h6e"/>
                     <constraint firstItem="nm3-l6-xRp" firstAttribute="trailing" secondItem="MYE-hY-hf7" secondAttribute="trailing" id="JHP-7q-9iz"/>
                     <constraint firstItem="x0r-Bt-Rud" firstAttribute="leading" secondItem="MYE-hY-hf7" secondAttribute="leading" id="Ssh-Fu-ZYq"/>
+                    <constraint firstItem="MYE-hY-hf7" firstAttribute="top" secondItem="Mab-ng-K0i" secondAttribute="bottom" constant="16" id="U2b-lQ-Lty"/>
                     <constraint firstItem="x0r-Bt-Rud" firstAttribute="top" secondItem="MYE-hY-hf7" secondAttribute="bottom" constant="5" id="ZLc-3c-kaf"/>
+                    <constraint firstItem="Mab-ng-K0i" firstAttribute="leading" secondItem="SY3-hF-Wdp" secondAttribute="leading" constant="5" id="cal-gb-7IV"/>
+                    <constraint firstAttribute="trailing" secondItem="Mab-ng-K0i" secondAttribute="trailing" constant="10" id="jWe-uW-P8d"/>
                     <constraint firstItem="nm3-l6-xRp" firstAttribute="top" secondItem="MYE-hY-hf7" secondAttribute="bottom" constant="5" id="kkE-0a-h8M"/>
+                    <constraint firstItem="Mab-ng-K0i" firstAttribute="top" secondItem="SY3-hF-Wdp" secondAttribute="top" constant="14" id="lxn-f2-R0p"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="274" y="-253.5"/>
+            <point key="canvasLocation" x="274" y="-290.5"/>
         </window>
     </objects>
     <resources>

@@ -8,7 +8,7 @@
 import Cocoa
 import os
 
-class Document: NSDocument {
+class Document: NSDocument, NSControlTextEditingDelegate {
     
     @IBOutlet weak var videoTableView: NSTableView!
     @IBOutlet weak var objectiveTableView: NSTableView!
@@ -30,13 +30,18 @@ class Document: NSDocument {
     // Topic picker panel
     @IBOutlet weak var pickerWindow: NSWindow!
     @IBOutlet weak var topicTableView: NSTableView!
-    
+    @IBOutlet weak var searchField: NSSearchField!
+
     var chapter: Chapter
     var selectedObjectiveIndex: Int
+    var topicSublist:[String]
 
     // Initialize with an empty chapter
     override init() {
         self.chapter = Chapter(files: [], requires: [], covers: [])
+        
+        let appDel = NSApplication.shared.delegate as! AppDelegate
+        self.topicSublist = appDel.topicList
         
         // Nothing selected in the objectives table view
         self.selectedObjectiveIndex = -1
@@ -72,6 +77,26 @@ class Document: NSDocument {
     {
         super.windowControllerDidLoadNib(windowController)
         self.updateButtons()
+    }
+    
+    func controlTextDidChange(_ obj: Notification)
+    {
+        if let sender = obj.object as? NSControl {
+            if sender == self.searchField {
+                let a = self.searchField.stringValue.lowercased()
+                self.topicSublist = []
+                let appDel = NSApplication.shared.delegate as! AppDelegate
+                for i in appDel.topicList {
+                    if let topic = appDel.topicDict[i] {
+                        let description:String = topic.desc
+                        if description.lowercased().contains(a) || i.lowercased().contains(a) {
+                            self.topicSublist.append(i)
+                        }
+                    }
+                }
+                self.topicTableView.reloadData()
+            }
+        }
     }
 }
 
@@ -256,12 +281,13 @@ extension Document {
     }
     @IBAction func addRequires(sender: AnyObject) {
         self.videoTableView.window?.endEditing(for: nil)
+        self.searchField.stringValue = ""
         requiresTableView.window?.beginSheet(pickerWindow, completionHandler: {
             response in
             if response == NSApplication.ModalResponse.OK {
                 let appDel = NSApplication.shared.delegate as! AppDelegate
                 let row = self.topicTableView.selectedRow
-                let key = appDel.topicList[row]
+                let key = self.topicSublist[row]
                 let lastIndex = self.chapter.requires.count
                 self.insertRequires(name:key, at:lastIndex)
             }
@@ -502,8 +528,7 @@ extension Document: NSTableViewDelegate, NSTableViewDataSource {
 
     func numberOfRows(in tableView: NSTableView) -> Int {
         if tableView == topicTableView {
-            let appDel = NSApplication.shared.delegate as! AppDelegate
-            return appDel.topicList.count
+            return self.topicSublist.count
         }
         if tableView == filesTableView {
             return chapter.files.count
@@ -533,7 +558,7 @@ extension Document: NSTableViewDelegate, NSTableViewDataSource {
     {
         if tableView == topicTableView {
             let appDel = NSApplication.shared.delegate as! AppDelegate
-            let key = appDel.topicList[row]
+            let key = self.topicSublist[row]
             let identifier = (tableColumn?.identifier)!
             if identifier.rawValue  == "id" {
                 return key
