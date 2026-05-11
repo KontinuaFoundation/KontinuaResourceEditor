@@ -39,12 +39,11 @@ class Document: NSDocument, NSControlTextEditingDelegate {
     // Initialize with an empty chapter
     override init() {
         self.chapter = Chapter(files: [], requires: [], covers: [])
-        
+        self.topicSublist = []
+        self.selectedObjectiveIndex = -1
+        super.init()
         let appDel = NSApplication.shared.delegate as! AppDelegate
         self.topicSublist = appDel.topicList
-        
-        // Nothing selected in the objectives table view
-        self.selectedObjectiveIndex = -1
     }
 
     override class var autosavesInPlace: Bool {
@@ -67,9 +66,9 @@ class Document: NSDocument, NSControlTextEditingDelegate {
             chapter = try decoder.decode(Chapter.self, from: data)
         } catch {
             os_log("Parsing error: \(error)")
-            let a = NSAlert(error:error)
+            let a = NSAlert(error: error)
             a.runModal()
-            
+            throw error
         }
     }
 
@@ -111,11 +110,10 @@ extension Document {
         }
         // Check the string to see if it is URL-like
         read = pasteboard.pasteboardItems?.first?.string(forType:.string)
-        if let url:String = read {
-            let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-            if let match = detector.firstMatch(in:url, options: [], range: NSRange(location: 0, length: url.utf16.count)) {
-                // it is a link, if the match covers the whole string
-                if (match.range.length == url.utf16.count) {
+        if let url: String = read,
+           let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue) {
+            if let match = detector.firstMatch(in: url, options: [], range: NSRange(location: 0, length: url.utf16.count)) {
+                if match.range.length == url.utf16.count {
                     return url
                 }
             }
@@ -287,6 +285,7 @@ extension Document {
             if response == NSApplication.ModalResponse.OK {
                 let appDel = NSApplication.shared.delegate as! AppDelegate
                 let row = self.topicTableView.selectedRow
+                guard row != -1 else { return }
                 let key = self.topicSublist[row]
                 let lastIndex = self.chapter.requires.count
                 self.insertRequires(name:key, at:lastIndex)
@@ -559,18 +558,17 @@ extension Document: NSTableViewDelegate, NSTableViewDataSource {
         if tableView == topicTableView {
             let appDel = NSApplication.shared.delegate as! AppDelegate
             let key = self.topicSublist[row]
-            let identifier = (tableColumn?.identifier)!
-            if identifier.rawValue  == "id" {
+            guard let identifier = tableColumn?.identifier else { return nil }
+            if identifier.rawValue == "id" {
                 return key
             } else {
-                return appDel.topicDict[key]!.desc
+                return appDel.topicDict[key]?.desc
             }
-            
         }
         if tableView == filesTableView {
-            let obj:FileRef = chapter.files[row]
-            let key = (tableColumn?.identifier)!
-            if key.rawValue  == "path" {
+            let obj: FileRef = chapter.files[row]
+            guard let key = tableColumn?.identifier else { return nil }
+            if key.rawValue == "path" {
                 return obj.path
             } else {
                 return obj.desc
@@ -581,9 +579,9 @@ extension Document: NSTableViewDelegate, NSTableViewDataSource {
             return chapter.requires[row]
         }
         if tableView == objectiveTableView {
-            let obj:Objective = chapter.covers[row]
-            let key = (tableColumn?.identifier)!
-            if key.rawValue  == "id" {
+            let obj: Objective = chapter.covers[row]
+            guard let key = tableColumn?.identifier else { return nil }
+            if key.rawValue == "id" {
                 return obj.id
             } else {
                 return obj.desc

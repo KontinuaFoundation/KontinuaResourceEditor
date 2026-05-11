@@ -27,26 +27,33 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func updateTopicsList() {
         let defaults = UserDefaults()
         // The user can have the latest topic_index
-        var path = defaults.value(forKeyPath: PrefsController.pathKey) as? String
-        
+        let userPath = defaults.value(forKeyPath: PrefsController.pathKey) as? String
+
         // Or use the one in the app wrapper
-        if path == nil {
-            path = Bundle.main.path(forResource:"topic_index", ofType: "json")
+        let path = userPath ?? Bundle.main.path(forResource: "topic_index", ofType: "json")
+        guard let path = path else {
+            os_log("No topic_index found")
+            return
         }
-           
-        do {
-            let url = URL(fileURLWithPath: path!)
+
+        let url = URL(fileURLWithPath: path)
+        // Only security-scoped URLs (user-selected files) need access granted
+        let needsSecurityAccess = userPath != nil
+        if needsSecurityAccess {
             guard url.startAccessingSecurityScopedResource() else {
                 os_log("No permission to read: \(url)")
                 return
             }
-            let jsonData = try Data(contentsOf:url)
-            url.stopAccessingSecurityScopedResource()
+        }
+        do {
+            let jsonData = try Data(contentsOf: url)
+            if needsSecurityAccess { url.stopAccessingSecurityScopedResource() }
             let decoder = JSONDecoder()
-            topicDict = try decoder.decode([String:Topic].self, from: jsonData)
+            topicDict = try decoder.decode([String: Topic].self, from: jsonData)
             topicList = Array(topicDict.keys.sorted())
             os_log("Topics read: \(self.topicList.count)")
         } catch {
+            if needsSecurityAccess { url.stopAccessingSecurityScopedResource() }
             os_log("Parsing error: \(error)")
         }
     }
