@@ -14,4 +14,4 @@ Drag and drop or click to upload the JSON you want to edit at the first step. If
 
 Once you download the JSON, it will be in your downloads folder as `digital_resources.json`. Move it from there to the language folder of the chapter it was made for.
 
-If the output is saved as `digital_resources (1).json` or anything similar, be sure to remove the dupliacte prevention after you move it. The chapters folders should only have `digital_resources.json`
+If the output is saved as `digital_resources (1).json` or anything similar, be sure to remove the duplicate-prevention suffix after you move it. The chapter folders should only have `digital_resources.json`
